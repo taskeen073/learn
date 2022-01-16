@@ -30,7 +30,6 @@ class _CreateAccountState extends State<CreateAccount> {
           buildTitle('Type User'),
           RadioForForm(),
           buildTitle('Normal Data'),
-          
         ],
       ),
     );
@@ -57,7 +56,7 @@ Row buildName(double size) {
           child: TextFormField(
               decoration: InputDecoration(
                   labelStyle: MyConstants().h3Small,
-                  labelText: 'Name :',
+                  labelText: 'Test : ',
                   prefixIcon: Icon(
                     Icons.fingerprint,
                     color: MyConstants.PrToBl5,
