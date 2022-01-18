@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:learn/utility/my_constant.dart';
 import 'package:learn/widgets/show_image.dart';
 import 'package:learn/widgets/show_radio_for_form.dart';
@@ -16,6 +20,48 @@ class _CreateAccountState extends State<CreateAccount> {
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     String? typeUser;
+    File? file;
+
+    Future<Null> chooseImage(ImageSource source) async {
+      try {
+        var result = await ImagePicker()
+            .pickImage(source: source, maxHeight: 800, maxWidth: 800);
+        setState(() {
+          file = File(result!.path);
+          print(file);
+        });
+      } catch (e) {
+        setState(() {
+          print(e);
+        });
+      }
+    }
+
+    Row buildSelectPhoto(double size) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () => chooseImage(
+              ImageSource.camera,
+            ),
+            icon: Icon(Icons.add_a_photo, size: 36),
+            color: MyConstants.PrToBl5,
+          ),
+          Container(
+              margin: EdgeInsets.symmetric(vertical: 16),
+              width: size * 0.6,
+              child: file == null
+                  ? ShowImage(path: MyConstants.image_account)
+                  : Image.file(file!)),
+          IconButton(
+              onPressed: () => chooseImage(ImageSource.gallery),
+              icon: Icon(Icons.add_photo_alternate, size: 36),
+              color: MyConstants.PrToBl5),
+        ],
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -40,25 +86,7 @@ class _CreateAccountState extends State<CreateAccount> {
             buildPassWord(size),
             buildTitle('Image'),
             buildSub(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.add_a_photo, size: 36),
-                  color: MyConstants.PrToBl5,
-                ),
-                Container(
-                    margin: EdgeInsets.symmetric(vertical: 16),
-                    width: size * 0.6,
-                    child: ShowImage(path: MyConstants.image_account)),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.add_photo_alternate, size: 36),
-                    color: MyConstants.PrToBl5),
-              ],
-            )
+            buildSelectPhoto(size)
           ],
         ),
       ),
