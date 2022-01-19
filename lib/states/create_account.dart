@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learn/utility/my_constant.dart';
@@ -22,10 +21,10 @@ class _CreateAccountState extends State<CreateAccount> {
     String? typeUser;
     File? file;
 
-    Future<Null> chooseImage(ImageSource source) async {
+    Future<Null?> chooseImage(ImageSource source) async {
       try {
-        var result = await ImagePicker()
-            .pickImage(source: source, maxHeight: 800, maxWidth: 800);
+        var result = await ImagePicker().pickImage(
+            source: source, maxHeight: 800, maxWidth: 800, imageQuality: 100);
         setState(() {
           file = File(result!.path);
           print(file);
@@ -84,9 +83,6 @@ class _CreateAccountState extends State<CreateAccount> {
             buildPhone(size),
             buildUser(size),
             buildPassWord(size),
-            buildTitle('Image'),
-            buildSub(),
-            buildSelectPhoto(size)
           ],
         ),
       ),
