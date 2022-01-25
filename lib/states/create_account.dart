@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learn/utility/my_constant.dart';
 import 'package:learn/widgets/show_image.dart';
+import 'package:learn/widgets/show_image_and_select.dart';
 import 'package:learn/widgets/show_radio_for_form.dart';
 import 'package:learn/widgets/show_title.dart';
+import 'package:learn/widgets/show_image.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -21,7 +23,12 @@ class _CreateAccountState extends State<CreateAccount> {
     String? typeUser;
     File? file;
 
-    Future<Null?> chooseImage(ImageSource source) async {
+    @override
+    void initState() {
+      super.initState();
+    }
+
+    Future<void> chooseImage(ImageSource source) async {
       try {
         var result = await ImagePicker().pickImage(
             source: source, maxHeight: 800, maxWidth: 800, imageQuality: 100);
@@ -85,6 +92,13 @@ class _CreateAccountState extends State<CreateAccount> {
             buildPassWord(size),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        backgroundColor: Colors.green,
+        child: const Icon(Icons.navigation),
       ),
     );
   }
